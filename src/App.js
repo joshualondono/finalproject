@@ -87,7 +87,7 @@ function App() {
 
   useEffect(() => {
     fetchNotes();
-  }, []);
+  }, [notes]);
 
   async function fetchNotes() {
     const apiData = await API.graphql({ query: listNotes });
@@ -105,8 +105,8 @@ function App() {
 
   async function deleteNote({ id }) {
     const newNotesArray = notes.filter(note => note.id !== id);
-    setNotes(newNotesArray);
     await API.graphql({ query: deleteNoteMutation, variables: { input: { id } }});
+    setNotes(newNotesArray);
   }
   const validUrl = require('valid-url');
 
@@ -114,9 +114,6 @@ function App() {
   return (
     <div className="App">
        <AmplifySignOut />
-
-       
-
 
       <Button onClick={createNote}>Create Note</Button>
       <h1>My Tutorials Journal 🗒️</h1>
